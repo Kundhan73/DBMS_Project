@@ -1,0 +1,32 @@
+// Conceptual ER diagram (Chen notation): entities, relationships, cardinalities.
+graph ER {
+  graph [layout=sfdp, overlap=prism, K=0.6, splines=true, fontname="Helvetica", pad=0.3];
+  node [fontname="Helvetica", fontsize=15];
+  edge [fontname="Helvetica", fontsize=13, color="#5d6874"];
+  node [shape=box, style="filled", fillcolor="#e7f4ef", color="#0d6b61", penwidth=1.4];
+  COMPLEX; BLOCK; UNIT; USER [label="APP_USER"]; OWNER [label="OWNER\n(ISA user)"]; TENANT [label="TENANT\n(ISA user)"];
+  LEASE; INVOICE; PAYMENT; SLOT [label="PARKING_SLOT"]; VEHICLE; VENDOR; REQUEST [label="MAINTENANCE_\nREQUEST"];
+  EMB [label="REQUEST_EMBEDDING\n(vector 384)", shape=box, peripheries=2, fillcolor="#fbeaea", color="#aa3333"];
+  node [shape=diamond, style="filled", fillcolor="#fdf3e3", color="#b7791f", penwidth=1.2, fontsize=12];
+  has_block [label="has"]; has_unit [label="has"]; owns [label="OWNS\nshare_pct"]; manages [label="MANAGES"];
+  leases [label="LEASED_BY"]; rents [label="RENTS"]; billed [label="BILLED_FOR"]; pays [label="SETTLES"];
+  slot_in [label="has"]; alloc [label="ALLOCATED\n(period, charge)"]; drives [label="REGISTERS"];
+  raises [label="RAISES"]; about [label="ABOUT"]; fixes [label="ASSIGNED_TO"]; embeds [label="EMBEDDED_AS"];
+  isa [label="ISA", shape=triangle, fillcolor="#e8f1fb", color="#3b6ea5"];
+  COMPLEX -- has_block [label="1"]; has_block -- BLOCK [label="N"];
+  BLOCK -- has_unit [label="1"]; has_unit -- UNIT [label="N"];
+  OWNER -- owns [label="M"]; owns -- UNIT [label="N"];
+  USER -- manages [label="M"]; manages -- COMPLEX [label="N"];
+  USER -- isa; isa -- OWNER; isa -- TENANT;
+  UNIT -- leases [label="1"]; leases -- LEASE [label="N"];
+  TENANT -- rents [label="1"]; rents -- LEASE [label="N"];
+  LEASE -- billed [label="1"]; billed -- INVOICE [label="N"];
+  INVOICE -- pays [label="1"]; pays -- PAYMENT [label="N"];
+  COMPLEX -- slot_in [label="1"]; slot_in -- SLOT [label="N"];
+  SLOT -- alloc [label="M"]; alloc -- VEHICLE [label="N"]; alloc -- UNIT [label="N"];
+  USER -- drives [label="1"]; drives -- VEHICLE [label="N"];
+  USER -- raises [label="1"]; raises -- REQUEST [label="N"];
+  REQUEST -- about [label="N"]; about -- UNIT [label="1"];
+  REQUEST -- fixes [label="N"]; fixes -- VENDOR [label="1"];
+  REQUEST -- embeds [label="1"]; embeds -- EMB [label="1"];
+}

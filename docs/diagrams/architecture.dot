@@ -1,0 +1,21 @@
+digraph arch {
+  graph [rankdir=TB, fontname="Helvetica", nodesep=0.5, ranksep=0.9, pad=0.3];
+  node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=11, color="#9aa4ae", fillcolor="white"];
+  edge [fontname="Helvetica", fontsize=9, color="#5d6874"];
+  subgraph cluster_client { label="Browser"; style="rounded,dashed"; color="#b8c0c8";
+    ui [label="Next.js client pages (React)\nDashboard · Units · Leases · Billing\nParking · Maintenance · Reports · Audit", fillcolor="#e8f1fb"]; }
+  subgraph cluster_server { label="Next.js server (Node.js)"; style="rounded,dashed"; color="#b8c0c8";
+    proxy [label="proxy.ts\nsession check / redirect", fillcolor="#eef0f2"];
+    api [label="Route handlers /api/*\nlib/api.ts: auth (JWT cookie), role checks,\nzod validation, PG error -> HTTP mapping", fillcolor="#e7f4ef"];
+    scope [label="lib/scope.ts\nrow-level visibility\n(v_user_complex_scope)", fillcolor="#e7f4ef"];
+    emb [label="lib/embeddings.ts\ntransformers.js + ONNX Runtime\nall-MiniLM-L6-v2 (384-d)", fillcolor="#fbeaea"];
+    db [label="lib/db.ts\npg Pool, withTransaction()\nSET LOCAL app.user_id", fillcolor="#e7f4ef"]; }
+  subgraph cluster_pg { label="PostgreSQL 16"; style="rounded,dashed"; color="#b8c0c8";
+    rel [label="Relational schema\n19 tables · domains · CHECK · EXCLUDE\ntriggers · procedures · views · MV", fillcolor="#fdf3e3"];
+    vec [label="pgvector\nrequest_embedding vector(384)\nHNSW (cosine)", fillcolor="#fbeaea"];
+    fts [label="Full-text search\ntsvector + GIN", fillcolor="#fdf3e3"]; }
+  ui -> proxy [label="page request"]; ui -> api [label="fetch JSON\n(HttpOnly cookie)"];
+  api -> scope; api -> emb [label="embed text / query"]; api -> db; scope -> db;
+  db -> rel [label="SQL (parameterised)"]; db -> vec [label="<=> cosine"]; db -> fts [label="@@ tsquery"];
+  rel -> vec [label="FK + ON DELETE CASCADE\nstale-vector trigger", style=dashed, dir=both];
+}
