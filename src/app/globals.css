@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Design tokens
+   Palette, spacing and type scale come from the supplied
+   iphone-duo-apple token files (brand / secondary / neutral ramps,
+   tertiary-1 #0071e3 action blue, shadow-xs hairline).
+   ------------------------------------------------------------------ */
+@theme {
+  --color-brand-50: oklch(0.9659 0.0209 227.5);
+  --color-brand-100: oklch(0.9347 0.0345 241.5);
+  --color-brand-200: oklch(0.8956 0.0542 245.9);
+  --color-brand-300: oklch(0.8233 0.0917 250.4);
+  --color-brand-400: oklch(0.7322 0.1422 252.7);
+  --color-brand-500: oklch(0.6301 0.177 255.8);
+  --color-brand-600: oklch(0.522 0.1771 255.8);   /* #0066cc link blue */
+  --color-brand-700: oklch(0.4214 0.1469 256.5);
+  --color-brand-800: oklch(0.3246 0.1308 259.8);
+  --color-brand-900: oklch(0.2267 0.114 263);
+
+  --color-secondary-50: oklch(0.9572 0.0253 56.1);
+  --color-secondary-100: oklch(0.9276 0.042 52.1);
+  --color-secondary-500: oklch(0.6292 0.161 42.3);
+  --color-secondary-600: oklch(0.5368 0.1606 42.4); /* #b64400 "New" orange */
+  --color-secondary-700: oklch(0.421 0.1335 39.5);
+
+  --color-neutral-50: oklch(0.971 0.004 286.3);    /* #f5f5f8 canvas */
+  --color-neutral-100: oklch(0.9412 0.0053 286.3);
+  --color-neutral-200: oklch(0.899 0.0068 286.3);
+  --color-neutral-300: oklch(0.8309 0.0055 286.3);
+  --color-neutral-400: oklch(0.7395 0.0071 286.2);
+  --color-neutral-500: oklch(0.6287 0.0089 286.1);
+  --color-neutral-600: oklch(0.519 0.0078 286.1);  /* muted text */
+  --color-neutral-700: oklch(0.4213 0.0049 286.2);
+  --color-neutral-800: oklch(0.3187 0.007 286);
+  --color-neutral-900: oklch(0.2191 0.0058 285.9);
+  --color-neutral-950: oklch(0.1297 0.005 285.7);
+
+  --color-action: #0071e3;          /* tertiary-1: buttons */
+  --color-action-hover: #0077ed;
+  --color-teal: #00a1b3;            /* tertiary-2 */
+  --color-violet: #8668ff;          /* tertiary-3 */
+  --color-orange: #ed6300;          /* tertiary-4 */
+
+  /* semantic aliases used across components */
+  --color-bg: #f5f5f7;
+  --color-surface: #ffffff;
+  --color-ink: #1d1d1f;
+  --color-muted: #6e6e73;
+  --color-faint: #86868b;
+  --color-line: #d2d2d7;
+  --color-hair: #e8e8ed;
+  --color-fill: #e8e8ed;            /* segmented controls, secondary pills */
+
+  --shadow-xs: rgb(230, 230, 232) 0px 0px 0px 1px;
+  --shadow-tile: 0 2px 12px rgb(0 0 0 / 0.04);
+  --shadow-lift: 0 8px 30px rgb(0 0 0 / 0.12);
+
+  --radius-tile: 18px;
+
+  --text-8.4px: 0.525rem;
+  --text-12px: 0.75rem;
+  --text-14px: 0.875rem;
+  --text-17px: 1.0625rem;
+  --text-19px: 1.1875rem;
+  --text-21px: 1.3125rem;
+  --text-24px: 1.5rem;
+  --text-28px: 1.75rem;
+  --text-40px: 2.5rem;
+  --text-48px: 3rem;
+  --text-80px: 5rem;
+
+  /* SF Pro on Apple devices; Inter (self-hosted) everywhere else */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", "Inter Variable", Inter, "Segoe UI", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+html, body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+}
+body {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.tabular { font-variant-numeric: tabular-nums; }
+::selection { background: color-mix(in oklch, var(--color-action) 22%, transparent); }
+
+/* Apple-style headline tracking */
+.headline { letter-spacing: -0.015em; font-weight: 600; line-height: 1.08; }
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.02em; color: var(--color-secondary-600); }
+
+/* Translucent material used by the global nav and modal backdrop */
+.material {
+  background: rgb(251 251 253 / 0.8);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+
+/* Soft entrance, respecting reduced-motion */
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.rise { animation: rise 0.45s cubic-bezier(0.28, 0.11, 0.32, 1) both; }
+@media (prefers-reduced-motion: reduce) { .rise { animation: none; } }
+
+/* Thin horizontal scrollbar for the nav on small screens */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
