@@ -1,12 +1,10 @@
 # Multi-Complex Apartment Management and Analytics System
 
-DBMS Experiential Learning, Level 3 Project · PES University
-
+DBMS Experiential Learning, Level 3 Project ·
 | | |
 |---|---|
-| Team | Kundhan Vudutha (PES1UG24AM327) · _Partner name (SRN)_ |
+| Team | Kundhan Vudutha (PES1UG24AM327) · _Tejas Shetty (PES1UG24AM305)_ |
 | Section | F |
-| Course instructor | Dr. Nagasundari S |
 | Stack | PostgreSQL 16 + pgvector 0.6 · Next.js 16 (App Router, Route Handlers) · Node.js 22 |
 | Database paradigms | Relational (SQL) + Vector (pgvector) + PostgreSQL full-text search |
 
@@ -543,9 +541,7 @@ Future enhancements:
 
 ## 16. Individual contributions
 
-_Edit this to reflect how the work was actually divided. The guideline requires each member to contribute to both the database and the application, and commits should show it._
-
-| Area | Kundhan Vudutha | _Partner_ |
+| Area | Kundhan Vudutha | _Tejas Shetty_ |
 |---|---|---|
 | Database design | ER model, property / leasing / billing tables, domains and constraints | Parking, people and maintenance tables, indexes |
 | Database logic | Billing function, late fees, payment triggers, `sp_terminate_lease` | Parking and maintenance triggers, audit trigger, views and materialized view |
